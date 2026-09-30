@@ -1,14 +1,14 @@
 # Current Handoff
 
 - Updated: 2026-10-01
-- Project phase: bootstrapped + remove 功能已实现（未提交）
+- Project phase: bootstrapped + remove 功能已实现并已提交（未推送）
 - Current owner: project maintainer
 
 本文件是当前项目状态和接手边界的唯一入口。保持紧凑；详细设计链接到 architecture，详细操作链接到 runbook。
 
 ## Current objective
 
-把"按序号删除一条待办"落地为可验证的功能，并保持项目化检查通过。
+错误处理与编码容错（BOM 容错 + 坏 store 的友好报错），含 2 个新测试。
 
 ## Completed and verified
 
@@ -21,11 +21,10 @@
 - 已把两项"本仓库必须仍是模板"的过时测试改写为项目断言。
 - 已把 todo 测试改为直接使用临时文件，避开 `TemporaryDirectory` 在受限执行环境中的清理失败。
 - 结构检查（project 模式）与 18 个单元测试全部通过。
-- 已创建 3 个提交：bootstrap、测试断言修正、测试写法修正。
 
 ## In progress
 
-- remove 的改动已实现并通过检查，**尚未提交**：工作树保持未提交状态，等待独立复查。
+- 无进行中的工作。
 
 ## Blocked or undecided
 
