@@ -26,7 +26,8 @@ python src/todo.py
 ## 结果判定
 
 - 布局检查输出 `layout check passed in project mode`，退出码 0。
-- 单元测试 6 个全部通过（5 个模板检查器测试 + 1 个项目测试）。
+- 单元测试 9 个全部通过（5 个项目布局检查器测试 + 4 个 todo 项目测试）。
+- 测试的临时文件写在 `tests/_work/`，该目录不进 Git。
 - `git diff --check` 无输出。
 
 ## 尚未覆盖

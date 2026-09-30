@@ -14,7 +14,10 @@ import todo  # noqa: E402
 
 class TodoStoreTest(unittest.TestCase):
     def setUp(self) -> None:
-        self._tmp = tempfile.TemporaryDirectory()
+        # 测试临时文件放在仓库内，避免依赖系统临时目录的写权限。
+        base = Path(__file__).resolve().parent / "_work"
+        base.mkdir(exist_ok=True)
+        self._tmp = tempfile.TemporaryDirectory(dir=base)
         self.addCleanup(self._tmp.cleanup)
         self.store = Path(self._tmp.name) / "todo.json"
 

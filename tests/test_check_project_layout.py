@@ -31,18 +31,13 @@ class ProjectLayoutCheckerTests(unittest.TestCase):
         self.assertEqual(mode, "project")
         self.assertEqual(errors, [])
 
-    def test_current_template_config_is_valid(self) -> None:
+    def test_current_project_config_is_valid(self) -> None:
         config = json.loads((ROOT / "config/project.json").read_text(encoding="utf-8"))
-        self.assertEqual(CHECKER.check_config(config, "template", explicit_mode=False), [])
+        self.assertEqual(CHECKER.check_config(config, "project", explicit_mode=False), [])
 
-    def test_current_template_fails_project_customization(self) -> None:
+    def test_current_project_has_no_template_leftovers(self) -> None:
         config = json.loads((ROOT / "config/project.json").read_text(encoding="utf-8"))
-        errors = CHECKER.check_project_customization(config)
-        self.assertIn("projectName still identifies the template", errors)
-        self.assertIn(
-            "template-only file remains in project mode: docs/runbooks/bootstrap-new-project.md",
-            errors,
-        )
+        self.assertEqual(CHECKER.check_project_customization(config), [])
 
 
 if __name__ == "__main__":
