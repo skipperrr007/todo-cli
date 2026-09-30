@@ -16,9 +16,11 @@
 python src/todo.py add "写文档"
 python src/todo.py add "跑测试"
 python src/todo.py
+python src/todo.py remove 1
 ```
 
-最后一条会列出全部待办。数据默认写入当前目录的 `todo.json`（该文件不进 Git）。
+无参数的那条命令会按 `1.`、`2.` 的序号列出全部待办；`remove` 使用同一个序号删除其中一条，
+删除后其余待办重新编号前移。数据默认写入当前目录的 `todo.json`（该文件不进 Git）。
 
 ## 快速接手
 

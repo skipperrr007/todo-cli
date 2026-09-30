@@ -11,7 +11,7 @@
 ```text
 命令行参数
   -> src/todo.py main()
-    -> add() / load() / save()
+    -> add() / remove() / load() / save()
       -> todo.json（本机数据，不进 Git）
 
 tests/test_todo.py  --导入-->  src/todo.py
@@ -22,15 +22,16 @@ tools/check_project_layout.py  --只读检查-->  仓库结构（不参与运行
 
 | 组件 | 主要职责 | 不应承担 |
 |---|---|---|
-| `src/todo.py` | 加载、保存、追加和列出待办 | 参数解析以外的界面逻辑 |
-| `tests/test_todo.py` | 验证 add 与 load 行为 | 生产逻辑 |
+| `src/todo.py` | 加载、保存、追加、按显示序号删除和列出待办 | 参数解析以外的界面逻辑 |
+| `tests/test_todo.py` | 验证 add、remove 与 load 行为 | 生产逻辑 |
 | `config/project.json` | 仓库角色、项目身份和模板来源 | 详细功能配置 |
 | `tools/` | 结构和身份检查 | 被生产代码依赖 |
 | `docs/` | 设计、操作和交接知识 | 生产代码 |
 
 ## 数据流
 
-`main()` 解析参数；无参数时调用 `load()` 并打印带序号的列表；`add` 子命令追加一条后整体写回 JSON 文件。
+`main()` 解析参数；无参数时调用 `load()` 并打印带序号的列表；`add` 子命令追加一条后整体写回 JSON 文件；
+`remove` 子命令把 1-based 显示序号换算为内部下标，校验通过后删除一项并整体写回。
 
 ## 外部依赖
 
@@ -41,10 +42,12 @@ tools/check_project_layout.py  --只读检查-->  仓库结构（不参与运行
 
 ## 失败边界
 
-- `todo.json` 内容不是合法 JSON 时，`load()` 抛出异常，命令以非零码退出。
+- `todo.json` 内容不是合法 JSON 时，`load()` 抛出异常，命令以非零码退出，且不会改写该文件。
 - 目录不可写时 `save()` 失败，数据不落盘。
+- `remove` 的序号越界或参数非法时，错误写入 stderr 并返回非零码；store 保持逐字节不变。
 
 ## 当前限制
 
 - 无并发保护，两个进程同时写会互相覆盖。
 - 无输入校验，空字符串也会被写入。
+- `save()` 直接覆盖写入，不是原子替换；删除不可逆、`todo.json` 无备份，写盘中断可能留下损坏文件。
