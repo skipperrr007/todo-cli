@@ -3,23 +3,30 @@
 from __future__ import annotations
 
 import sys
-import tempfile
 import unittest
+import uuid
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 import todo  # noqa: E402
 
+WORK = Path(__file__).resolve().parent / "_work"
+
 
 class TodoStoreTest(unittest.TestCase):
+    """每个测试使用一个独立临时文件。
+
+    这里刻意不用 tempfile.TemporaryDirectory：它在清理时会对目录执行 chmod
+    并递归扫描目录树，在受限的运行环境里会被拒绝。直接使用文件既简单又稳定。
+    """
+
     def setUp(self) -> None:
-        # 测试临时文件放在仓库内，避免依赖系统临时目录的写权限。
-        base = Path(__file__).resolve().parent / "_work"
-        base.mkdir(exist_ok=True)
-        self._tmp = tempfile.TemporaryDirectory(dir=base)
-        self.addCleanup(self._tmp.cleanup)
-        self.store = Path(self._tmp.name) / "todo.json"
+        WORK.mkdir(parents=True, exist_ok=True)
+        self.store = WORK / f"store_{uuid.uuid4().hex}.json"
+
+    def tearDown(self) -> None:
+        self.store.unlink(missing_ok=True)
 
     def test_missing_store_is_empty(self) -> None:
         self.assertEqual(todo.load(self.store), [])

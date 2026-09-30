@@ -16,8 +16,10 @@
 - 已把根 README、CONTEXT、架构、验证 runbook 和本 handoff 改写为项目事实。
 - 已移除模板维护专属文档。
 - 已实现 `src/todo.py` 的 add/list 能力和 `tests/test_todo.py` 的项目测试。
-- 已识别并修正项目化后失效的两项模板测试（模板身份断言）以及测试临时目录的写权限问题。
-- 首个提交已创建（2026-10-01）。
+- 已把两项"本仓库必须仍是模板"的过时测试改写为项目断言。
+- 已把 todo 测试改为直接使用临时文件，避开 `TemporaryDirectory` 在受限执行环境中的清理失败。
+- 结构检查（project 模式）与 9 个单元测试全部通过。
+- 已创建 3 个提交：bootstrap、测试断言修正、测试写法修正。
 
 ## In progress
 
@@ -28,6 +30,7 @@
 - 是否实现 `done` 和 `remove` 尚无结论。
 - 尚未创建 GitHub 远程仓库，`origin` 未配置。
 - 许可证未选择。
+- 环境限制：`tests/_work/` 下由 `mkdtemp` 创建的早期残留空目录在当前沙箱内无法删除，不影响 Git 状态。
 
 ## Stop boundaries
 
