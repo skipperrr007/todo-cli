@@ -1,0 +1,40 @@
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Common caches and build outputs
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+dist/
+build/
+coverage/
+.coverage
+
+# Local scratch and generated output
+.cache/
+.tmp/
+tmp/
+artifacts/
+results/
+
+# Project-specific additions belong below this line.
+
+# Local todo data written by src/todo.py
+todo.json

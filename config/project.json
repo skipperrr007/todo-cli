@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "repositoryRole": "project",
+  "projectName": "todo-cli",
+  "templateVersion": "0.1.0",
+  "templateSource": "git@github.com:haloring/project-template.git",
+  "initializedOn": "2026-10-01"
+}
